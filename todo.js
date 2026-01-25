@@ -213,7 +213,7 @@ function generateTimeOptions() {
     }
 
     // 2. NEW: Minutes (00-55)
-    for(let i = 0; i < 60; i += 5) {
+    for(let i = 0; i < 60; i += 1) {
         const opt = document.createElement('div');
         opt.className = 'time-option';
         opt.textContent = i.toString().padStart(2, '0');

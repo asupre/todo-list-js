@@ -22,6 +22,7 @@ function createTaskElement(taskValue, taskDay, taskTime, isCompleted = false) {
     // 1. Check Button
     const checkBtn = document.createElement('button');
     checkBtn.className = 'check-btn';
+
     const checkIcon = document.createElement('i');
     checkIcon.setAttribute('data-lucide', isCompleted ? 'check-circle-2' : 'circle');
     checkBtn.appendChild(checkIcon);
@@ -37,6 +38,7 @@ function createTaskElement(taskValue, taskDay, taskTime, isCompleted = false) {
 
     const timeLabel = document.createElement('span');
     timeLabel.className = 'time-tag';
+    timeLabel.setAttribute('data-raw-time', taskTime || "");
     timeLabel.innerHTML = `<i class="fa-regular fa-clock"></i> ${formatTime(taskTime)}`;
     
 
@@ -51,13 +53,23 @@ function createTaskElement(taskValue, taskDay, taskTime, isCompleted = false) {
         saveToLocalStorage();
     };
 
-    checkBtn.onclick = () => {
-        listItem.classList.toggle('completed');
-        const isDone = listItem.classList.contains('completed');
-        checkIcon.setAttribute('data-lucide', isDone ? 'check-circle-2' : 'circle');
+   checkBtn.onclick = () => {
+    listItem.classList.toggle('completed');
+    const isDone = listItem.classList.contains('completed');
+    
+    // 1. Find the icon currently inside THIS button (it might be an <i> or an <svg>)
+    const currentIcon = checkBtn.querySelector('[data-lucide]');
+    
+    // 2. Update the attribute
+    currentIcon.setAttribute('data-lucide', isDone ? 'check-circle-2' : 'circle');
+    
+    // 3. Tell Lucide to re-render
+    if (window.lucide) {
         lucide.createIcons();
-        saveToLocalStorage();
-    };
+    }
+    
+    saveToLocalStorage();
+};
 
     metaContainer.appendChild(dayLabel);
     metaContainer.appendChild(timeLabel);
@@ -104,15 +116,16 @@ function addTask(event) {
 function saveToLocalStorage() {
     const tasks = [];
     document.querySelectorAll('.todo-item').forEach(item => {
+        const timeTag = item.querySelector('.time-tag');
+        
         tasks.push({
             text: item.querySelector('.task-text').textContent,
-            // Grab the text from your new labels
-            day: item.querySelector('.day-tag').textContent, 
-            time: item.querySelector('.time-tag').textContent,
+            day: item.querySelector('.day-tag').textContent,
+            // FIX: Grab the raw 24-hour time, not the formatted text!
+            time: timeTag ? timeTag.getAttribute('data-raw-time') : "",
             completed: item.classList.contains('completed')
         });
     });
-
     localStorage.setItem('coyTasks', JSON.stringify(tasks));
 }
 function loadFromLocalStorage() {

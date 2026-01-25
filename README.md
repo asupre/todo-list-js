@@ -5,3 +5,5 @@ My first project-based learning project. This is a simple To-Do List application
 * Add and Delete tasks
 * Persistent storage using JSON
 * Responsive design
+* Adding a Day Schedule
+* Adding a Time Schedule

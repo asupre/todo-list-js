@@ -7,14 +7,16 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="assets/sticky.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
 </head>
 <body>
     <div class="form-container">
-        <h2 class="header1">
-            <img src="assets/checklist.gif" alt="Checklist Icon" class="title-gif">
-            Asupre Tasker</h2>
-        <p id="underline">Stay organized, Stay productive</p>
+        <div class="header-section">
+            <h2 class="header1">
+                <img src="assets/checklist.gif" alt="Checklist Icon" class="title-gif">
+                Asupre Tasker
+            </h2>
+            <p id="underline">Stay organized, Stay productive</p>
+        </div>
         
         <form action="">
             <input type="text" id="todo-input" placeholder="Add a new task..." class="input">
@@ -31,24 +33,27 @@
                 <option value="Sunday">Sunday</option>
             </select>
 
-                <div class="notion-property" id="time-trigger">
-                    <i class="fa-regular fa-clock"></i>
-                    <div class="time-picker-dropdown" id="custom-time-menu">
-                        <div class="time-column" id="hours-col"></div>
-                        <div class="time-column" id="mins-col"></div>
-                        <div class="time-column" id="ampm-col">
-                            <div class="time-option">AM</div>
-                            <div class="time-option">PM</div>
-                        </div>
+            <div class="notion-property" id="time-trigger">
+                <i class="fa-regular fa-clock"></i>
+                <div class="time-picker-dropdown" id="custom-time-menu">
+                    <div class="time-column" id="hours-col"></div>
+                    <div class="time-column" id="mins-col"></div>
+                    <div class="time-column" id="ampm-col">
+                        <div class="time-option">AM</div>
+                        <div class="time-option">PM</div>
                     </div>
                 </div>
+            </div>
+            
             <button type="submit" id="add-button">+</button>
         </form>
 
-        <ul id="listShow"></ul>
+        <div class="tasks-wrapper">
+            <ul id="listShow"></ul>
+        </div>
     </div>
-</body>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="todo.js"></script>
 
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="todo.js"></script>
+</body>
 </html>

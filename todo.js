@@ -83,28 +83,27 @@ function createTaskElement(taskValue, taskDay, taskTime, isCompleted = false) {
     return listItem;
 }
 
+// Remove the old: const taskTime = document.getElementById('time-input');
+
 function addTask(event) {
     event.preventDefault();
+    
     const taskValue = inputedTask.value.trim();
     if (taskValue === "") return;
 
-    // Create a clean object so we don't get confused
+    // Grab the text from the blue 'selected' boxes
+    const hour = document.querySelector('#hours-col .selected')?.textContent || "12";
+    const min = document.querySelector('#mins-col .selected')?.textContent || "00";
+    const ampm = document.querySelector('#ampm-col .selected')?.textContent || "AM";
+
     const taskData = {
         text: taskValue,
-        day: taskDay.value,
-        time: taskTime.value,
+        day: taskDay.value || "Anyday",
+        time: `${hour}:${min} ${ampm}`, // This creates "03:15 PM"
         completed: false
     };
 
-    // FIX: Hand over the data in the EXACT order the helper expects:
-    // 1. Text | 2. Day | 3. Time | 4. Completed
-    const newTask = createTaskElement(
-        taskData.text, 
-        taskData.day, 
-        taskData.time, 
-        taskData.completed
-    );
-    
+    const newTask = createTaskElement(taskData.text, taskData.day, taskData.time, taskData.completed);
     listShow.appendChild(newTask);
 
     saveToLocalStorage();
@@ -112,7 +111,6 @@ function addTask(event) {
     inputedTask.value = "";
     inputedTask.focus();
 }
-
 function saveToLocalStorage() {
     const tasks = [];
     document.querySelectorAll('.todo-item').forEach(item => {
@@ -154,25 +152,89 @@ addButton.addEventListener('click', addTask);
 inputedTask.addEventListener('keypress', (event) => {
     if(event.key === 'Enter') addTask(event);
 });
-
 function formatTime(timeString) {
-    // If no time is picked, return a default string
+    // If it's empty, show "Anytime"
     if (!timeString || timeString === "") return "Anytime";
     
-    try {
-        let [hours, minutes] = timeString.split(':');
-        // If the split failed, minutes will be undefined
-        if (minutes === undefined) return "Anytime";
-
-        let ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; 
-        
-        return `${hours}:${minutes} ${ampm}`;
-    } catch (e) {
-        return "Anytime";
-    }
+    // Since you already formatted it as "08:43 PM" in addTask,
+    // just return it exactly as it is. This stops the "AM AM" bug.
+    return timeString; 
 }
 
+
+function initTimePicker() {
+    const trigger = document.getElementById('time-trigger');
+    const menu = document.getElementById('custom-time-menu');
+
+    if (!trigger || !menu) return;
+
+    trigger.onclick = (e) => {
+        // This is the most important line! 
+        // It prevents the "window.onclick" from firing at the same time.
+        e.stopPropagation(); 
+
+        const isVisible = menu.style.display === 'grid';
+        
+        // Toggle the display
+        if (isVisible) {
+            menu.style.display = 'none';
+        } else {
+            menu.style.display = 'grid';
+        }
+    };
+    
+    // Call your loops to fill the numbers here...
+    generateTimeOptions(); 
+}
+
+// Separate listener for clicking outside
+window.addEventListener('click', (e) => {
+    const menu = document.getElementById('custom-time-menu');
+    const trigger = document.getElementById('time-trigger');
+    
+    // Only close if the click was NOT on the menu or the trigger
+    if (menu && !trigger.contains(e.target)) {
+        menu.style.display = 'none';
+    }
+});
+
+function generateTimeOptions() {
+    const hoursCol = document.getElementById('hours-col');
+    const minsCol = document.getElementById('mins-col');
+    const ampmCol = document.getElementById('ampm-col');
+
+    // 1. Hours (01-12) - You already have this
+    for(let i = 1; i <= 12; i++) {
+        const opt = document.createElement('div');
+        opt.className = 'time-option';
+        opt.textContent = i.toString().padStart(2, '0');
+        opt.onclick = (e) => { e.stopPropagation(); selectOption(hoursCol, opt); };
+        hoursCol.appendChild(opt);
+    }
+
+    // 2. NEW: Minutes (00-55)
+    for(let i = 0; i < 60; i += 5) {
+        const opt = document.createElement('div');
+        opt.className = 'time-option';
+        opt.textContent = i.toString().padStart(2, '0');
+        opt.onclick = (e) => { e.stopPropagation(); selectOption(minsCol, opt); };
+        minsCol.appendChild(opt);
+    }
+
+    // 3. NEW: AM/PM Click Logic
+    Array.from(ampmCol.children).forEach(opt => {
+        opt.onclick = (e) => {
+            e.stopPropagation();
+            selectOption(ampmCol, opt);
+        };
+    });
+}
+
+function selectOption(container, element) {
+    Array.from(container.children).forEach(c => c.classList.remove('selected'));
+    element.classList.add('selected');
+}
 // Run this when the page opens
 loadFromLocalStorage();
+// CRITICAL: Call the function at the bottom of todo.js
+initTimePicker();

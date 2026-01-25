@@ -8,4 +8,5 @@ My first project-based learning project. This is a simple To-Do List application
 * Adding a Day Schedule
 * Adding a Time Schedule
 * Adding GIF beside the header
+* Redisigning the Time Schedule
 

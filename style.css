@@ -90,6 +90,7 @@ form {
   margin-bottom: 28px;
   align-items: center;
   flex-wrap: wrap;
+  overflow: visible;
 }
 
 /* Input Fields */
@@ -153,7 +154,8 @@ form {
   height: 44px;
   justify-content: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  z-index: 10;
 }
 
 .notion-property:hover {
@@ -397,4 +399,71 @@ form {
 .time-tag:hover {
   background: rgba(148, 163, 184, 0.15);
   border-color: rgba(148, 163, 184, 0.3);
+}
+
+.time-picker-dropdown {
+    position: absolute;
+    top: calc(100% + 5px); /* Perfectly below the clock box */
+    left: 0;
+    background: #1e293b; /* Solid card color */
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: none; /* JS will change this to 'grid' */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+    z-index: 999; /* Sit on top of everything */
+    width: 180px;  /* Give it a set width so it doesn't squash */
+}
+
+.time-column {
+    height: 160px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 50px; /* Give each column enough space */
+    border-right: 1px solid rgba(255,255,255,0.05);
+}
+.time-column:last-child { border-right: none; }
+/* Custom Scrollbar for the dark theme */
+.time-column::-webkit-scrollbar {
+    width: 4px;
+}
+.time-column::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+}
+
+.time-option {
+    padding: 10px 5px;
+    color: #e2e8f0; /* Light gray for readability */
+    font-size: 0.85rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.time-option:hover {
+    background: rgba(59, 130, 246, 0.2);
+    color: white;
+}
+
+.time-option.selected {
+    background: var(--primary); /* That bright blue from your screenshot */
+    color: white;
+    font-weight: bold;
+}
+
+#custom-time-menu {
+    display: none; 
+    position: absolute;
+    top: 100%; /* Places it right below the clock box */
+    left: 0;
+    /* ... rest of your design ... */
+ 
+    /* ... existing styles ... */
+    position: absolute;
+    z-index: 9999 !important; /* Forces it to the very front */
+    background-color: #1e293b; /* Ensure it's not transparent */
+
 }

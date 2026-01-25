@@ -21,6 +21,7 @@
 
             <select name="day-schedule" id="day-schedule">
                 <option value="" disabled selected>Day</option>
+                <option value="Today">Today</option>
                 <option value="Monday">Monday</option>
                 <option value="Tuesday">Tuesday</option>
                 <option value="Wednesday">Wednesday</option>
@@ -30,11 +31,17 @@
                 <option value="Sunday">Sunday</option>
             </select>
 
-            <label for="time-input" class="notion-property">
-                <i class="fa-regular fa-clock"></i>
-                <input type="time" id="time-input" class="notion-time-picker">
-            </label>
-
+                <div class="notion-property" id="time-trigger">
+                    <i class="fa-regular fa-clock"></i>
+                    <div class="time-picker-dropdown" id="custom-time-menu">
+                        <div class="time-column" id="hours-col"></div>
+                        <div class="time-column" id="mins-col"></div>
+                        <div class="time-column" id="ampm-col">
+                            <div class="time-option">AM</div>
+                            <div class="time-option">PM</div>
+                        </div>
+                    </div>
+                </div>
             <button type="submit" id="add-button">+</button>
         </form>
 

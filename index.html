@@ -11,18 +11,32 @@
 </head>
 <body>
     <div class="form-container">
-        
         <h2 class="header1">✨ Task Master</h2>
         <p id="underline">Stay organized, stay productive</p>
+        
         <form action="">
             <input type="text" id="todo-input" placeholder="Add a new task..." class="input">
+
+            <select name="day-schedule" id="day-schedule">
+                <option value="" disabled selected>Day</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+
+            <label for="time-input" class="notion-property">
+                <i class="fa-regular fa-clock"></i>
+                <input type="time" id="time-input" class="notion-time-picker">
+            </label>
+
             <button type="submit" id="add-button">+</button>
         </form>
 
-        <ul id="listShow">
-            <div></div>
-        </ul>
-
+        <ul id="listShow"></ul>
     </div>
 </body>
 <script src="https://unpkg.com/lucide@latest"></script>

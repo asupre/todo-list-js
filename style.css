@@ -17,7 +17,9 @@
 }
 
 body {
-  font-family: 'Segoe UI', -apple-system, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   background: var(--background);
   margin: 0;
   display: flex;
@@ -30,9 +32,9 @@ body {
 /* Container: Responsive & Centered */
 .form-container {
   background: var(--card);
-  padding: 32px;
+  padding: 40px;
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
@@ -50,80 +52,149 @@ body {
   }
 }
 
-
-
 .header1 {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: 1.875rem;
+  font-weight: 800;
   margin-bottom: 8px;
-  color:#5387d4;
-  
-  background-clip: text;
+  color: #5387d4;
   text-align: center;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.8px;
 }
 
 #underline {
   text-align: center;
   color: var(--muted);
   font-size: 0.875rem;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   margin-top: 8px;
+  font-weight: 500;
 }
 
-/* Input & Form Layout */
+/* Form Layout */
 form {
   display: flex;
   gap: 10px;
-  margin-bottom: 24px;
-  position: relative;
+  margin-bottom: 28px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Input Fields */
+.input,
+#day-schedule {
+  background: var(--card-hover);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  transition: all 0.2s ease;
+  font-family: inherit;
 }
 
 .input {
   flex: 1;
-  background: var(--card-hover);
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  padding: 12px 16px;
-  font-size: 0.95rem;
-  color: #e2e8f0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  min-width: 150px;
 }
 
 .input::placeholder {
   color: var(--muted);
 }
 
-.input:focus {
+.input:focus,
+#day-schedule:focus {
   outline: none;
   border-color: var(--primary);
   background: #0f172a;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-  transform: translateY(-2px);
 }
 
+#day-schedule {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 32px;
+  min-width: 120px;
+}
+
+#day-schedule option {
+  background: #1e293b;
+  color: #e2e8f0;
+  border: none;
+}
+
+/* Time Input Container */
+.notion-property {
+  display: flex;
+  align-items: center;
+  background: var(--card-hover);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 0 10px;
+  gap: 0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  position: relative;
+}
+
+.notion-property:hover {
+  border-color: var(--primary);
+  background: #0f172a;
+}
+
+.notion-property i {
+  font-size: 24px;
+  color: var(--muted);
+  pointer-events: none;
+  transition: color 0.2s ease;
+  z-index: 2;
+}
+
+.notion-property:hover i {
+  color: var(--primary);
+}
+
+.notion-time-picker {
+  position: absolute;
+  /* Instead of moving it off-screen, we stretch it to fill the box */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  /* This ensures it sits on TOP of the icon so it's clickable */
+  z-index: 10; 
+}
+
+/* Add Button - Enhanced */
 #add-button {
   background: linear-gradient(135deg, var(--primary), #2563eb);
   color: white;
   border: none;
-  border-radius: var(--radius);
-  padding: 12px 24px;
+  border-radius: 8px;
+  padding: 10px 20px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 50px;
+  gap: 6px;
+  white-space: nowrap;
 }
 
 #add-button:hover {
   background: linear-gradient(135deg, var(--primary-hover), #1d4ed8);
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 12px 16px -4px rgba(59, 130, 246, 0.3);
 }
 
 #add-button:active {
@@ -137,18 +208,18 @@ form {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .todo-item {
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: 14px 16px;
   border: 1.5px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 8px;
   gap: 12px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.5), rgba(51, 65, 85, 0.3));
+  transition: all 0.2s ease;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(51, 65, 85, 0.2));
   position: relative;
   overflow: hidden;
 }
@@ -162,22 +233,22 @@ form {
   width: 3px;
   background: linear-gradient(180deg, var(--primary), #8b5cf6);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
 .todo-item:hover {
   border-color: var(--primary);
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.6));
-  transform: translateX(4px);
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(51, 65, 85, 0.4));
+  transform: translateX(2px);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
 }
 
-.todo-item span {
+.task-text {
   flex: 1;
   font-size: 0.95rem;
   color: #e2e8f0;
   word-break: break-word;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 /* Checkbox Button */
@@ -190,24 +261,24 @@ form {
   align-items: center;
   justify-content: center;
   color: var(--muted);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   flex-shrink: 0;
 }
 
 .check-btn:hover {
   color: var(--primary);
-  transform: scale(1.15);
+  transform: scale(1.2);
 }
 
 .check-btn svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   stroke-width: 2;
 }
 
 /* COMPLETED STATE */
 .todo-item.completed {
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
 .todo-item.completed::before {
@@ -215,7 +286,7 @@ form {
   background: linear-gradient(180deg, var(--success), #059669);
 }
 
-.todo-item.completed span {
+.todo-item.completed .task-text {
   text-decoration: line-through;
   color: var(--muted);
 }
@@ -248,7 +319,7 @@ form {
   border: none;
   color: var(--muted);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   padding: 4px 8px;
   display: flex;
   align-items: center;
@@ -266,4 +337,49 @@ form {
 
 .delete-btn:active {
   transform: scale(0.95);
+}
+
+/* Tags & Meta Information */
+.task-meta {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.day-tag,
+.time-tag {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+}
+
+.day-tag {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.day-tag:hover {
+  background: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.time-tag {
+  background: rgba(148, 163, 184, 0.1);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.time-tag:hover {
+  background: rgba(148, 163, 184, 0.15);
+  border-color: rgba(148, 163, 184, 0.3);
 }

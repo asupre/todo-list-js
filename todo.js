@@ -83,7 +83,7 @@ function addTask(event) {
     const taskData = {
         text: taskValue,
         day: taskDay.value || "Anyday",
-        time: `${hour}:${min} ${ampm}`,
+        time: `${hour}:${min} ${ampm} || "Anytime"`,
         completed: false
     };
 

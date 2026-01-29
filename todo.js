@@ -76,14 +76,14 @@ function addTask(event) {
     const taskValue = inputedTask.value.trim();
     if (taskValue === "") return;
 
-    const hour = document.querySelector('#hours-col .selected')?.textContent || "";
-    const min = document.querySelector('#mins-col .selected')?.textContent || "";
-    const ampm = document.querySelector('#ampm-col .selected')?.textContent || "ANYTIME";
+    const hour = document.querySelector('#hours-col .selected')?.textContent || "12";
+    const min = document.querySelector('#mins-col .selected')?.textContent || "00";
+    const ampm = document.querySelector('#ampm-col .selected')?.textContent || "";
 
     const taskData = {
         text: taskValue,
         day: taskDay.value || "Anyday",
-        time: `${hour}:${min} ${ampm}`,
+        time: `${hour}:${min} ${ampm}` || "Anytime",
         completed: false
     };
 

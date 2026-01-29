@@ -76,8 +76,8 @@ function addTask(event) {
     const taskValue = inputedTask.value.trim();
     if (taskValue === "") return;
 
-    const hour = document.querySelector('#hours-col .selected')?.textContent || "12";
-    const min = document.querySelector('#mins-col .selected')?.textContent || "00";
+    const hour = document.querySelector('#hours-col .selected')?.textContent || "ANY";
+    const min = document.querySelector('#mins-col .selected')?.textContent || "TIME";
     const ampm = document.querySelector('#ampm-col .selected')?.textContent || "";
 
     const taskData = {

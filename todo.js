@@ -78,12 +78,12 @@ function addTask(event) {
 
     const hour = document.querySelector('#hours-col .selected')?.textContent || "";
     const min = document.querySelector('#mins-col .selected')?.textContent || "";
-    const ampm = document.querySelector('#ampm-col .selected')?.textContent || "";
+    const ampm = document.querySelector('#ampm-col .selected')?.textContent || "ANYTIME";
 
     const taskData = {
         text: taskValue,
         day: taskDay.value || "Anyday",
-        time: `${hour}:${min} ${ampm} Anytime`,
+        time: `${hour}:${min} ${ampm}`,
         completed: false
     };
 
